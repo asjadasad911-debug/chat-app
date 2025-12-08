@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App - WhatsApp Style</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Emoji Picker Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.18.1/picker.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <div class="app-logo">💬</div>
+            <h1>Chat App</h1>
+            <p>WhatsApp-style messaging</p>
+
+            <div class="login-form">
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="text" id="display-name" placeholder="Your Name" required>
+
+                <button id="login-btn" class="btn-primary">Login</button>
+                <button id="signup-btn" class="btn-secondary">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Screen -->
+    <div id="chat-screen" class="screen">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <img id="current-user-avatar" class="avatar" src="https://via.placeholder.com/40" alt="User">
+                <div class="header-info">
+                    <h3 id="current-user-name">User</h3>
+                    <span id="user-status" class="status-text">Online</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="logout-btn" class="icon-btn">🚪 Logout</button>
+            </div>
+        </div>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Sidebar - Users List -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Chats</h2>
+                    <button id="new-chat-btn" class="icon-btn">➕</button>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="search-users" placeholder="🔍 Search users...">
+                </div>
+
+                <div id="users-list" class="users-list">
+                    <!-- Users will be loaded here dynamically -->
+                    <div class="empty-state">
+                        <p>No users found</p>
+                        <small>Invite friends to chat!</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <!-- Chat Header (Selected User) -->
+                <div id="chat-user-header" class="chat-user-header" style="display: none;">
+                    <img id="chat-user-avatar" class="avatar" src="https://via.placeholder.com/40" alt="User">
+                    <div class="chat-user-info">
+                        <h3 id="chat-user-name">Select a user</h3>
+                        <span id="chat-user-status" class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">offline</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div id="messages-container" class="messages-container">
+                    <div class="empty-chat-state">
+                        <div class="empty-icon">💬</div>
+                        <h3>Welcome to Chat App!</h3>
+                        <p>Select a user from the sidebar to start chatting</p>
+                        <div class="features-list">
+                            <div class="feature">✅ Real-time messaging</div>
+                            <div class="feature">✅ Read receipts (✓✓)</div>
+                            <div class="feature">✅ Voice messages 🎤</div>
+                            <div class="feature">✅ Emoji support 😊</div>
+                            <div class="feature">✅ Online/Offline status</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Input Area -->
+                <div id="message-input-area" class="message-input-area" style="display: none;">
+                    <!-- Emoji Picker (Hidden by default) -->
+                    <div id="emoji-picker-container" class="emoji-picker-container" style="display: none;">
+                        <emoji-picker id="emoji-picker"></emoji-picker>
+                    </div>
+
+                    <!-- Voice Recording UI -->
+                    <div id="voice-recording-ui" class="voice-recording-ui" style="display: none;">
+                        <div class="recording-indicator">
+                            <span class="recording-dot">🔴</span>
+                            <span id="recording-time">0:00</span>
+                        </div>
+                        <button id="cancel-recording" class="icon-btn">❌ Cancel</button>
+                        <button id="send-voice" class="icon-btn">📤 Send</button>
+                    </div>
+
+                    <!-- Normal Input (Hidden when recording) -->
+                    <div id="normal-input" class="input-controls">
+                        <button id="emoji-btn" class="icon-btn" title="Emoji">😊</button>
+                        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                        <button id="voice-btn" class="icon-btn" title="Voice Message">🎤</button>
+                        <button id="send-btn" class="btn-send" title="Send">📤</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <!-- Emoji Picker Element -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.18.1/index.js"></script>
+
+    <!-- App Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
