@@ -12,7 +12,7 @@ const firebaseConfig = {
     messagingSenderId: "376645007032",
     appId: "1:376645007032:web:55752237584258dd6a64d",
     measurementId: "G-YQFL04GG07",
-    databaseURL: "https://one-click-96526-default-rtdb.firebaseio.com" // For online/offline status
+    databaseURL: "https://one-click-96526-default-rtdb.asia-southeast1.firebasedatabase.app" // For online/offline status
 };
 
 // Initialize Firebase
