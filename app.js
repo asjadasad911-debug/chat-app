@@ -10,6 +10,7 @@ let mediaRecorder = null;
 let audioChunks = [];
 let recordingStartTime = null;
 let recordingInterval = null;
+let allUsers = []; // Store all users for search
 
 // DOM Elements
 const loginScreen = document.getElementById('login-screen');
@@ -141,20 +142,35 @@ function updateCurrentUserUI(user) {
 
 function loadUsers() {
     db.collection('users')
-        .where('uid', '!=', currentUserId)
         .onSnapshot((snapshot) => {
-            usersList.innerHTML = '';
-
-            if (snapshot.empty) {
-                usersList.innerHTML = '<div class="empty-state"><p>No users found</p></div>';
-                return;
-            }
+            allUsers = []; // Clear previous users
 
             snapshot.forEach((doc) => {
                 const userData = doc.data();
-                createUserItem(userData);
+                // Skip current user
+                if (userData.uid !== currentUserId) {
+                    allUsers.push(userData);
+                }
             });
+
+            displayUsers(allUsers);
+        }, (error) => {
+            console.error('Error loading users:', error);
+            usersList.innerHTML = '<div class="empty-state"><p>Error loading users</p><small>Please refresh the page</small></div>';
         });
+}
+
+function displayUsers(users) {
+    usersList.innerHTML = '';
+
+    if (users.length === 0) {
+        usersList.innerHTML = '<div class="empty-state"><p>No users found</p><small>Invite friends to chat!</small></div>';
+        return;
+    }
+
+    users.forEach((userData) => {
+        createUserItem(userData);
+    });
 }
 
 function createUserItem(userData) {
@@ -545,6 +561,30 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
+// ========================================
+// USER SEARCH
+// ========================================
+
+const searchInput = document.getElementById('search-users');
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+
+    if (!searchTerm) {
+        // Show all users if search is empty
+        displayUsers(allUsers);
+        return;
+    }
+
+    // Filter users by name or email
+    const filteredUsers = allUsers.filter(user => {
+        const name = (user.displayName || '').toLowerCase();
+        const email = (user.email || '').toLowerCase();
+        return name.includes(searchTerm) || email.includes(searchTerm);
+    });
+
+    displayUsers(filteredUsers);
+});
 
 // ========================================
 // INITIALIZATION
