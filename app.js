@@ -65,8 +65,8 @@ loginBtn.addEventListener('click', async () => {
     }
 
     try {
-        // Set persistence to SESSION (login only lasts until browser is closed)
-        await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        // Set persistence to NONE (no auto-login - logout on refresh/close)
+        await auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
         await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
         alert('Login failed: ' + error.message);
@@ -90,8 +90,8 @@ signupBtn.addEventListener('click', async () => {
     }
 
     try {
-        // Set persistence to SESSION (login only lasts until browser is closed)
-        await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        // Set persistence to NONE (no auto-login - logout on refresh/close)
+        await auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
 
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
 
